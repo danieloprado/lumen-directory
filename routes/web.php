@@ -1,3 +1,3 @@
 <?php
 
-$router->get('/profile', ['uses' => 'ProfileController@get']);
+$router->get('/profile', ['uses' => 'ProfileController@list']);

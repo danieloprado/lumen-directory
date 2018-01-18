@@ -7,6 +7,11 @@ class ProfileService
     {
     }
 
+    public function list()
+    {
+        return [];
+    }
+
     public function get(int $id)
     {
         return 'olá mundo';

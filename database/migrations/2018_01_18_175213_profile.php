@@ -17,7 +17,7 @@ class Profile extends Migration
             $table->increments('id');
             $table->string('name', 100);
             $table->string('email', 150)->unique();
-            $table->string('phone', 11);
+            $table->string('phone', 11)->nullable();
             
             $table->timestamps();
         });
