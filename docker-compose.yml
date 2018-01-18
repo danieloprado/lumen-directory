@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+  web:
+    container_name: lumen-directory
+    tty: true
+    build: .
+    volumes:
+      - .:/src
+    ports:
+      - "3000:8080"
+    links:
+      - mysql
+
+  mysql:
+    container_name: lumen-database
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=mysql
+      - MYSQL_DATABASE=lumen
+      - MYSQL_USER=123
+      - MYSQL_PASSWORD=123
+    volumes:
+      - ./.docker/_data/mysql:/var/lib/mysql
+      - ./.docker/_data/logs:/var/logs/mysql

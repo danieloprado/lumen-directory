@@ -1,0 +1,4 @@
+app/vendor
+vendor
+.DS_Store
+.docker
