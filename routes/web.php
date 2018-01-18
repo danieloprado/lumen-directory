@@ -1,3 +1,3 @@
 <?php
 
-$router->get('/', ['uses' => 'HomeController@version']);
+$router->get('/profile', ['uses' => 'ProfileController@get']);

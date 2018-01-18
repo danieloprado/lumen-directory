@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\ProfileService;
 
-class HomeController extends Controller
+class ProfileController extends Controller
 {
     private $profileService;
 
@@ -13,8 +13,8 @@ class HomeController extends Controller
         $this->profileService = $profileService;
     }
 
-    public function version()
+    public function get()
     {
-        return response()->json($this->profileService->get(1));
+        return response()->json([]);
     }
 }
