@@ -3,6 +3,7 @@ namespace App\Services;
 
 use App\Models\Profile;
 use App\Repositories\ProfileRepository;
+use App\Exceptions\ServiceException;
 
 class ProfileService
 {
@@ -19,24 +20,29 @@ class ProfileService
      */
     public function save($data): Profile
     {
-        $profile = $this->profileRepository->getById($data->id);
-
-        return !$profile ?
+        return !isset($data['id']) ?
             $this->create($data) :
-            $this->update($profile, $data);
+            $this->update($data);
     }
 
-    private function create($data)
+    private function create($data): Profile
     {
         $profile = new Profile();
         $profile->fill($data);
+        $profile->save();
 
         return $profile;
     }
 
-    private function update(Profile $profile, $data)
+    private function update($data): Profile
     {
-        $profile->fill($model);
+        $profile = $this->profileRepository->getById($data['id']);
+        
+        if (!$profile) {
+            throw new ServiceException('not-found', [ 'id' => $data['id'] ]);
+        }
+
+        $profile->fill($data);
         $profile->save();
 
         return $profile;

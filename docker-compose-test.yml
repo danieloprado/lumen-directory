@@ -1,11 +1,11 @@
 version: '3'
 
 services:
-  web:
+  test:
     container_name: lumen-directory-test
     tty: true
-    build: .
+    build: ./docker/api
     environment: 
       - APP_ENV=testing
     volumes:
-      - .:/src
+      - ./api:/src

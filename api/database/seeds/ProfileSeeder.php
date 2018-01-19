@@ -17,11 +17,12 @@ class ProfileSeeder extends Seeder
             return;
         }
 
-        $faker = Faker\Factory::create();
+        $faker = Faker\Factory::create('pt_BR');
 
         DB::table('profile')->insert([
             'name' => $faker->name,
             'email' => $faker->email,
+            'phone' => substr($faker->cellphoneNumber(false), 0, 11),
             'created_at'=> date("Y-m-d"),
             'updated_at'=> date("Y-m-d")
         ]);
