@@ -1,0 +1,11 @@
+version: '3'
+
+services:
+  web:
+    container_name: lumen-directory-test
+    tty: true
+    build: .
+    environment: 
+      - APP_ENV=testing
+    volumes:
+      - .:/src

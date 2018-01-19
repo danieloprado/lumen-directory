@@ -11,4 +11,4 @@ WORKDIR /src
 
 EXPOSE 8080
 
-CMD /bin/sh /src/start.sh
+CMD /bin/sh /src/start-docker.sh
