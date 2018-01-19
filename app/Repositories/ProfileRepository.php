@@ -12,4 +12,11 @@ class ProfileRepository
             ->with(['experiences', 'knowlogments'])
             ->get();
     }
+
+    public function getById(int $id)
+    {
+        return Profile::with(['experiences', 'knowlogments'])
+                ->where('id', '=', $id)
+                ->first();
+    }
 }
