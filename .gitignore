@@ -1,5 +1,6 @@
 app/vendor
 vendor
 .DS_Store
+.data
 .docker
 storage

@@ -1,4 +1,3 @@
-
 if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
   echo "Options:
   --help  -h    Show options
