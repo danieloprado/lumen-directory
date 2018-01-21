@@ -29,7 +29,15 @@ class ProfileSeeder extends Seeder
 
         DB::table('profile_experience')->insert([
             'profile_id' => 1,
-            'company' => 'Empresa',
+            'company' => $faker->company,
+             'started_at' => '2016-01-01',
+             'ended_at' => '2017-01-01',
+             'description' => 'Web/Mobile Developer'
+        ]);
+
+        DB::table('profile_experience')->insert([
+            'profile_id' => 1,
+            'company' => $faker->company,
              'started_at' => '2017-01-01',
              'ended_at' => null,
              'description' => 'Web/Mobile Developer'

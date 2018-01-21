@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class ProfileKnowlogment extends Model
 {
     protected $table = 'profile_knowlogment';
+    public $timestamps = false;
 
     /**
      * The attributes that are mass assignable.

@@ -20,7 +20,27 @@ class ProfileServiceTest extends TestCase
         $data = [
             'name' => $faker->name,
             'email' => $faker->email,
-            'phone' => substr($faker->cellphoneNumber(false), 0, 11)
+            'phone' => substr($faker->cellphoneNumber(false), 0, 11),
+            'experiences' => [
+                [
+                    'company' => $faker->company,
+                    'started_at' => $faker->date('c', 'now'),
+                    'ended_at' => null,
+                    'description' => substr($faker->text, 0, 1000)
+                ],
+                [
+                    'company' => $faker->company,
+                    'started_at' => $faker->date('c', 'now'),
+                    'ended_at' => null,
+                    'description' => substr($faker->text, 0, 1000)
+                ]
+            ],
+            'knowlogments' => [
+                [
+                    'name' => substr($faker->text, 0, 50),
+                    'level' => $faker->numberBetween(1, 5)
+                ]
+            ]
         ];
 
         $result = $this->profileService->save($data);
@@ -30,6 +50,8 @@ class ProfileServiceTest extends TestCase
         $this->assertEquals($data['name'], $result->name);
         $this->assertEquals($data['email'], $result->email);
         $this->assertEquals($data['phone'], $result->phone);
+        $this->assertEquals(count($data['experiences']), count($result->experiences));
+        $this->assertEquals(count($data['knowlogments']), count($result->knowlogments));
     }
 
     public function testUpdate()
@@ -39,7 +61,22 @@ class ProfileServiceTest extends TestCase
             'id' => 1,
             'name' => $faker->name,
             'email' => $faker->email,
-            'phone' => substr($faker->cellphoneNumber(false), 0, 11)
+            'phone' => substr($faker->cellphoneNumber(false), 0, 11),
+            'experiences' => [
+                [
+                    'id' => 1,
+                    'company' => $faker->company,
+                    'started_at' => $faker->date('c', 'now'),
+                    'ended_at' => null,
+                    'description' => substr($faker->text, 0, 1000)
+                ],
+                [
+                    'company' => $faker->company,
+                    'started_at' => $faker->date('c', 'now'),
+                    'ended_at' => null,
+                    'description' => substr($faker->text, 0, 1000)
+                ]
+            ]
         ];
 
         $result = $this->profileService->save($data);
@@ -49,5 +86,6 @@ class ProfileServiceTest extends TestCase
         $this->assertEquals($data['name'], $result->name);
         $this->assertEquals($data['email'], $result->email);
         $this->assertEquals($data['phone'], $result->phone);
+        $this->assertEquals(count($data['experiences']), count($result->experiences));
     }
 }

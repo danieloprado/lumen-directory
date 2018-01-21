@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class ProfileExperience extends Model
 {
     protected $table = 'profile_experience';
-
+    public $timestamps = false;
+    
     /**
      * The attributes that are mass assignable.
      *
