@@ -19,4 +19,15 @@ class ProfileRepository
                 ->where('id', '=', $id)
                 ->first();
     }
+
+    public function emailIsAvailable(string $email, int $ignoreId = null)
+    {
+        $query = Profile::where('email', '=', $email);
+
+        if ($ignoreId) {
+            $query = $query->where('id', '!=', $ignoreId);
+        }
+
+        return $query->count() == 0;
+    }
 }

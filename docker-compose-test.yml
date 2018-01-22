@@ -7,5 +7,6 @@ services:
     build: ./docker/api
     environment: 
       - APP_ENV=testing
+      # - PHPUNIT_PARAMS=--debug
     volumes:
       - ./api:/src

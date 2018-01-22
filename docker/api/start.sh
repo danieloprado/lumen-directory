@@ -3,7 +3,7 @@ echo "APP_ENV: $APP_ENV"
 composer install --prefer-dist --no-progress --optimize-autoloader --no-interaction
 
 if [ "$APP_ENV" == "testing" ]; then
-   ./vendor/bin/phpunit
+   ./vendor/bin/phpunit $PHPUNIT_PARAMS
    exit $?
 fi
 

@@ -3,6 +3,7 @@
 use App\Services\ProfileService;
 use App\Repositories\ProfileRepository;
 use App\Models\Profile;
+use App\Exceptions\ServiceException;
 
 class ProfileServiceTest extends TestCase
 {
@@ -14,7 +15,7 @@ class ProfileServiceTest extends TestCase
         $this->profileService = new ProfileService(new ProfileRepository());
     }
 
-    public function testCreate()
+    public function testShouldCreateNewProfile()
     {
         $faker = Faker\Factory::create('pt_BR');
         $data = [
@@ -54,7 +55,7 @@ class ProfileServiceTest extends TestCase
         $this->assertEquals(count($data['knowlogments']), count($result->knowlogments));
     }
 
-    public function testUpdate()
+    public function testShouldUpdateProfile()
     {
         $faker = Faker\Factory::create('pt_BR');
         $data = [
@@ -87,5 +88,46 @@ class ProfileServiceTest extends TestCase
         $this->assertEquals($data['email'], $result->email);
         $this->assertEquals($data['phone'], $result->phone);
         $this->assertEquals(count($data['experiences']), count($result->experiences));
+        $this->assertEquals($data['experiences'][0]['id'], $result->experiences[0]->id);
+        $this->assertGreaterThan(2, $result->experiences[1]->id);
+        $this->assertEquals(0, count($result->knowlogments));
+    }
+
+    public function testShouldFailIfProfileIdIsNotValid()
+    {
+        try {
+            $faker = Faker\Factory::create('pt_BR');
+            $data = [
+                'id' => 9999,
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'phone' => substr($faker->cellphoneNumber(false), 0, 11)
+            ];
+
+            $this->profileService->save($data);
+            $this->fail("Should not save successfully");
+        } catch (ServiceException $e) {
+            $this->assertInstanceOf(ServiceException::class, $e);
+            $this->assertEquals('not-found', $e->getMessage());
+        }
+    }
+
+    public function testShouldFailIfEmailIsAlreadyTaken()
+    {
+        try {
+            $faker = Faker\Factory::create('pt_BR');
+            $data = [
+                'name' => $faker->name,
+                'email' => $faker->email,
+                'phone' => substr($faker->cellphoneNumber(false), 0, 11)
+            ];
+
+            $this->profileService->save($data);
+            $this->profileService->save($data);
+            $this->fail("Should not save successfully");
+        } catch (ServiceException $e) {
+            $this->assertInstanceOf(ServiceException::class, $e);
+            $this->assertEquals('email-already-in-use', $e->getMessage());
+        }
     }
 }

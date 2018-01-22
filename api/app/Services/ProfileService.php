@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProfileService
 {
-    private $profileRepository;
+    private $repository;
 
     public function __construct(ProfileRepository $profileRepository)
     {
-        $this->profileRepository = $profileRepository;
+        $this->repository = $profileRepository;
     }
 
     /**
@@ -22,20 +22,22 @@ class ProfileService
     public function save($data): Profile
     {
         DB::beginTransaction();
+
+        $emailAvailable = $this->repository->emailIsAvailable($data['email'], isset($data['id']) ? $data['id']: null);
+        if (!$emailAvailable) {
+            throw new ServiceException('email-already-in-use', [ 'email' => $data['email'] ]);
+        }
         
         $profile =  !isset($data['id']) ?
             $this->create($data) :
             $this->update($data);
 
-        if (isset($data['experiences'])) {
-            $this->saveExperiences($profile, $data['experiences']);
-        }
-
-        if (isset($data['knowlogments'])) {
-            $profile->knowlogments()->createMany($data['knowlogments']);
-        }
+        $this->saveExperiences($profile, $data['experiences'] ?? []);
+        $this->saveKnowlogments($profile, $data['knowlogments'] ?? []);
 
         DB::commit();
+
+        $profile->load(['experiences','knowlogments']);
             
         return $profile;
     }
@@ -51,7 +53,7 @@ class ProfileService
 
     private function update($data): Profile
     {
-        $profile = $this->profileRepository->getById($data['id']);
+        $profile = $this->repository->getById($data['id']);
         
         if (!$profile) {
             throw new ServiceException('not-found', [ 'id' => $data['id'] ]);
@@ -65,23 +67,36 @@ class ProfileService
 
     private function saveExperiences(Profile $profile, $data)
     {
-        $experiences = array_reduce($data, function ($acc, $e) {
-            $key = isset($e['id']) && $e['id'] > 0 ? 'update': 'create';
-            $acc[$key][] = $e;
-            return $acc;
-        }, [
-            'create' => [],
-            'update' => []
-        ]);
+        return $this->saveRelationship($profile, 'experiences', $data);
+    }
 
-        foreach ($profile->experiences() as $e) {
-            dd($e);
-            if (!in_array($e->id, array_values($experiences['update']))) {
+    private function saveKnowlogments(Profile $profile, $data)
+    {
+        return $this->saveRelationship($profile, 'knowlogments', $data);
+    }
+
+    private function saveRelationship(Profile $profile, string $key, $data)
+    {
+        $currentData = $profile->$key()->get();
+
+        foreach ($currentData as $e) {
+            $current = array_filter($data, function ($d) use ($e) {
+                return isset($d['id']) && $d['id'] == $e->id;
+            });
+
+            if (count($current) == 0) {
                 $e->delete();
+                continue;
             }
+            
+            $e->fill($current[0]);
+            $profile->$key()->save($e);
         }
 
-        $profile->experiences()->createMany($experiences['create']);
-        $profile->experiences()->saveMany($experiences['update']);
+        $new = array_filter($data, function ($e) {
+            return  !isset($e['id']) || !$e['id'];
+        });
+
+        $profile->$key()->createMany($new);
     }
 }

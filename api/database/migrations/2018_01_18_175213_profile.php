@@ -27,8 +27,8 @@ class Profile extends Migration
             $table->integer('profile_id')->unsigned();
             
             $table->string('company', 100);
-            $table->date('started_at', 100);
-            $table->date('ended_at', 100)->nullable();
+            $table->date('started_at');
+            $table->date('ended_at')->nullable();
             $table->string('description', 1000);
 
             $table->foreign('profile_id')->references('id')->on('profile')->onDelete('cascade');
