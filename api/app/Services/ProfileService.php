@@ -42,6 +42,11 @@ class ProfileService
         return $profile;
     }
 
+    public function delete(int $id)
+    {
+        $this->repository->delete($id);
+    }
+
     private function create($data): Profile
     {
         $profile = new Profile();

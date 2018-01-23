@@ -130,4 +130,10 @@ class ProfileServiceTest extends TestCase
             $this->assertEquals('email-already-in-use', $e->getMessage());
         }
     }
+
+    public function testShouldAbleToDelete()
+    {
+        $this->profileService->delete(1);
+        $this->assertTrue(true);
+    }
 }

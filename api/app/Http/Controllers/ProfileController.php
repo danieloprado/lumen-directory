@@ -22,6 +22,11 @@ class ProfileController extends Controller
         return response()->json($this->profileRepository->list());
     }
 
+    public function get(int $id)
+    {
+        return response()->json($this->profileRepository->getById($id));
+    }
+
     public function save(Request $request)
     {
         $this->validate($request, [
@@ -38,10 +43,15 @@ class ProfileController extends Controller
             'knowlogments' => 'array',
             'knowlogments.*.id' => 'integer|min:1',
             'knowlogments.*.name' => 'required|max:50',
-            'knowlogments.*.level' => 'required|between:1,5',
+            'knowlogments.*.level' => 'integer|required|between:1,5',
         ]);
 
         $result = $this->profileService->save($request->all());
         return response()->json($result);
+    }
+
+    public function delete(int $id)
+    {
+        $this->profileService->delete($id);
     }
 }

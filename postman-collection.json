@@ -1,0 +1,139 @@
+{
+	"info": {
+		"name": "Lumen",
+		"_postman_id": "d050cd62-2150-f9d0-99a4-1bde5d68d06f",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [{
+		"name": "Profile",
+		"description": "",
+		"item": [{
+				"name": "Create",
+				"request": {
+					"method": "POST",
+					"header": [{
+						"key": "Content-Type",
+						"value": "application/json"
+					}],
+					"body": {
+						"mode": "raw",
+						"raw": "{\n\t\"name\": \"Daniel\",\n\t\"email\": \"danielprado.ad@gmail.com\",\n\t\"experiences\": [{\n\t\t\"company\": \"Prado 1\",\n\t\t\"started_at\": \"2018-01-22T17:52:49.596Z\",\n\t\t\"ended_at\": \"2018-01-23T17:52:49.596Z\",\n\t\t\"description\": \"WEB\"\n\t}, {\n\t\t\"company\": \"Prado 2\",\n\t\t\"started_at\": \"2018-01-20T17:52:49.596Z\",\n\t\t\"ended_at\": \"2018-01-23T17:12:49.596Z\",\n\t\t\"description\": \"WEB\"\n\t}],\n\t\"knowlogments\": [{\n\t\t\"name\": \"Ingles\",\n\t\t\"level\": 5\n\t}]\n}"
+					},
+					"url": {
+						"raw": "localhost:3000/profile",
+						"host": [
+							"localhost"
+						],
+						"port": "3000",
+						"path": [
+							"profile"
+						]
+					},
+					"description": ""
+				},
+				"response": []
+			},
+			{
+				"name": "List",
+				"request": {
+					"method": "GET",
+					"header": [],
+					"body": {},
+					"url": {
+						"raw": "localhost:3000/profile",
+						"host": [
+							"localhost"
+						],
+						"port": "3000",
+						"path": [
+							"profile"
+						]
+					},
+					"description": ""
+				},
+				"response": []
+			},
+			{
+				"name": "Update",
+				"request": {
+					"method": "POST",
+					"header": [{
+						"key": "Content-Type",
+						"value": "application/json"
+					}],
+					"body": {
+						"mode": "raw",
+						"raw": "{\n\t\"id\": 1,\n\t\"name\": \"Daniel\",\n\t\"email\": \"danielprado.ad@gmail.com\",\n\t\"experiences\": [{\n\t\t\"company\": \"Prado 1\",\n\t\t\"started_at\": \"2018-01-22T17:52:49.596Z\",\n\t\t\"ended_at\": \"2018-01-23T17:52:49.596Z\",\n\t\t\"description\": \"WEB\"\n\t}, {\n\t\t\"company\": \"Prado 2\",\n\t\t\"started_at\": \"2018-01-20T17:52:49.596Z\",\n\t\t\"ended_at\": \"2018-01-23T17:12:49.596Z\",\n\t\t\"description\": \"WEB\"\n\t}],\n\t\"knowlogments\": [{\n\t\t\"name\": \"Ingles\",\n\t\t\"level\": 5\n\t}]\n}"
+					},
+					"url": {
+						"raw": "localhost:3000/profile",
+						"host": [
+							"localhost"
+						],
+						"port": "3000",
+						"path": [
+							"profile"
+						]
+					},
+					"description": ""
+				},
+				"response": []
+			},
+			{
+				"name": "Delete",
+				"request": {
+					"method": "DELETE",
+					"header": [{
+						"key": "Content-Type",
+						"value": "application/json"
+					}],
+					"body": {
+						"mode": "raw",
+						"raw": ""
+					},
+					"url": {
+						"raw": "localhost:3000/profile/1",
+						"host": [
+							"localhost"
+						],
+						"port": "3000",
+						"path": [
+							"profile",
+							"1"
+						]
+					},
+					"description": ""
+				},
+				"response": []
+			},
+			{
+				"name": "Get",
+				"request": {
+					"method": "GET",
+					"header": [{
+						"key": "Content-Type",
+						"value": "application/json"
+					}],
+					"body": {
+						"mode": "raw",
+						"raw": ""
+					},
+					"url": {
+						"raw": "localhost:3000/profile/1",
+						"host": [
+							"localhost"
+						],
+						"port": "3000",
+						"path": [
+							"profile",
+							"1"
+						]
+					},
+					"description": ""
+				},
+				"response": []
+			}
+		]
+	}]
+}

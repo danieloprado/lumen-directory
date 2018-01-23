@@ -30,4 +30,9 @@ class ProfileRepository
 
         return $query->count() == 0;
     }
+
+    public function delete(int $id)
+    {
+        return Profile::where('id', '=', $id)->delete();
+    }
 }
