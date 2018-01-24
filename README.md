@@ -1,10 +1,8 @@
 # Lumen Api
 
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/6013a4d18a9309c2da53)
+
 See UI project: [React App](https://github.com/danieloprado/react-lumen-app)
-
-## Postman
-
-Import postman-collection.json
 
 ## For Developent
 
